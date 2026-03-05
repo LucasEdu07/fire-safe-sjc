@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ExternalLink, Quote, Star } from "lucide-react";
 import { GOOGLE_REVIEWS_URL } from "@/lib/constants";
 import { trackEvent } from "@/lib/analytics";
@@ -7,6 +7,7 @@ import {
   GOOGLE_REVIEWS_FALLBACK_META,
   type GoogleReviewItem,
 } from "@/data/google-reviews-fallback";
+import MobileCarouselControls from "@/components/MobileCarouselControls";
 
 type GoogleReviewsResponse = {
   ok: boolean;
@@ -132,6 +133,7 @@ const GoogleReviewsSection = () => {
   const [loading, setLoading] = useState(true);
   const [state, setState] = useState<ViewState>(fallbackState);
   const [utcNow, setUtcNow] = useState(() => new Date());
+  const reviewsCarouselRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -209,8 +211,8 @@ const GoogleReviewsSection = () => {
           </p>
         </div>
 
-        <div className="premium-surface mx-auto max-w-6xl bg-gradient-to-b from-card/95 via-card/88 to-secondary/60 p-5 sm:p-6 md:p-10">
-          <div className="mb-7 flex flex-col gap-4 sm:mb-8 sm:gap-5 lg:flex-row lg:items-end lg:justify-between">
+        <div className="premium-surface mx-auto max-w-6xl bg-gradient-to-b from-card/95 via-card/88 to-secondary/60 p-4 sm:p-6 md:p-10">
+          <div className="mb-6 flex flex-col gap-4 sm:mb-8 sm:gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <p className="text-sm font-semibold uppercase tracking-wide text-primary">Experiência comprovada</p>
               <h3 className="text-2xl font-display font-bold md:text-3xl">{state.place_name}</h3>
@@ -242,31 +244,41 @@ const GoogleReviewsSection = () => {
             </a>
           </div>
 
+          {!loading && reviews.length > 1 ? (
+            <MobileCarouselControls targetRef={reviewsCarouselRef} label="Navegar depoimentos" hideAboveClass="md:hidden" />
+          ) : null}
+
           {loading ? (
-            <div className="flex gap-4 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:grid md:overflow-visible md:pb-0 md:grid-cols-2 xl:grid-cols-3">
+            <div
+              ref={reviewsCarouselRef}
+              className="flex gap-3 overflow-x-hidden scroll-smooth pb-1 md:grid md:gap-4 md:overflow-visible md:pb-0 md:grid-cols-2 xl:grid-cols-3"
+            >
               {Array.from({ length: 6 }).map((_, index) => (
-                <div key={index} className="h-44 min-w-[84%] animate-pulse rounded-2xl border bg-card/64 md:min-w-0" />
+                <div key={index} className="h-40 min-w-full animate-pulse rounded-2xl border bg-card/64 md:h-44 md:min-w-0" />
               ))}
             </div>
           ) : reviews.length > 0 ? (
-            <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:grid md:overflow-visible md:pb-0 md:grid-cols-2 xl:grid-cols-3">
+            <div
+              ref={reviewsCarouselRef}
+              className="flex snap-x snap-mandatory gap-3 overflow-x-hidden scroll-smooth pb-1 md:grid md:gap-4 md:overflow-visible md:pb-0 md:grid-cols-2 xl:grid-cols-3"
+            >
               {reviews.map((review, index) => {
                 const parsedDate = getUtcDateFromRelativeDescription(review.relative_time_description, utcNow);
                 const reviewDateLabel = `Publicado em ${formatUtcDate(parsedDate || utcNow)}`;
 
                 return (
-                  <article key={`${review.author_name}-${index}`} className="card-base group h-full min-w-[86%] snap-start bg-card/92 p-4 sm:p-5 md:min-w-0">
-                    <div className="mb-4 flex items-start justify-between gap-3">
+                  <article key={`${review.author_name}-${index}`} className="card-base group h-full min-w-full snap-start bg-card/92 p-4 md:min-w-0 md:p-5">
+                    <div className="mb-3 flex items-start justify-between gap-2.5 md:mb-4 md:gap-3">
                       <div className="flex items-center gap-3">
                         {review.profile_photo_url ? (
                           <img
                             src={review.profile_photo_url}
                             alt={`Foto de ${review.author_name}`}
-                            className="h-10 w-10 rounded-full border object-cover"
+                            className="h-9 w-9 rounded-full border object-cover md:h-10 md:w-10"
                             loading="lazy"
                           />
                         ) : (
-                          <div className="h-10 w-10 rounded-full border bg-primary/10" />
+                          <div className="h-9 w-9 rounded-full border bg-primary/10 md:h-10 md:w-10" />
                         )}
                         <div>
                           <p className="text-sm font-semibold leading-tight">{review.author_name || "Cliente"}</p>
@@ -288,7 +300,7 @@ const GoogleReviewsSection = () => {
             </div>
           )}
 
-          <div className="mt-6 grid gap-3 sm:grid-cols-3">
+          <div className="mt-6 grid gap-2.5 sm:grid-cols-3 sm:gap-3">
             <div className="rounded-xl border border-border/70 bg-card/82 p-3 text-center">
               <p className="text-xs font-semibold text-muted-foreground">Compromisso</p>
               <p className="text-sm font-bold text-primary">Atendimento consultivo</p>
