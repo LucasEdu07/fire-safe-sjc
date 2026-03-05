@@ -24,7 +24,7 @@ const Header = () => {
 
   return (
     <header className="fixed left-0 right-0 top-0 z-50 border-b border-border/80 bg-background shadow-[0_12px_26px_rgba(15,23,42,0.16)]" role="banner">
-      <div className="border-b border-white/10 bg-gradient-to-r from-[#201712] via-[#3b2419] to-[#201712] py-1">
+      <div className="hidden border-b border-white/10 bg-gradient-to-r from-[#201712] via-[#3b2419] to-[#201712] py-1 sm:block">
         <div className="container flex items-center justify-between gap-2 text-[0.68rem] font-semibold tracking-[0.05em] text-background/95 sm:text-[0.72rem] sm:tracking-[0.06em]">
           <span className="inline-flex items-center gap-1.5 rounded-full border border-white/24 bg-white/10 px-2.5 py-0.5 text-background/98 sm:gap-2 sm:px-3.5 sm:py-1">
             <span className="h-2 w-2 rounded-full bg-[#ffd5bf]" aria-hidden="true" />

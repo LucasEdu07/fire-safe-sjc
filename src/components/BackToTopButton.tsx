@@ -36,7 +36,7 @@ const BackToTopButton = () => {
       type="button"
       aria-label="Voltar ao topo"
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className={`fixed bottom-[calc(max(0.9rem,env(safe-area-inset-bottom))+3.6rem)] right-3 z-50 flex h-10 w-10 items-center justify-center rounded-full border border-primary/35 bg-background/95 text-primary shadow-lg backdrop-blur transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 sm:bottom-24 sm:right-6 sm:h-12 sm:w-12 ${
+      className={`fixed bottom-[max(0.9rem,env(safe-area-inset-bottom))] left-3 z-50 flex h-10 w-10 items-center justify-center rounded-full border border-primary/35 bg-background/95 text-primary shadow-lg backdrop-blur transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 sm:bottom-6 sm:left-6 sm:h-12 sm:w-12 ${
         isVisible ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none translate-y-3 opacity-0"
       }`}
     >
