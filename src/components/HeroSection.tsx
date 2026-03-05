@@ -1,7 +1,6 @@
 import { Shield, Users, CheckCircle, MessageCircle } from "lucide-react";
+import { WHATSAPP_LINK } from "@/lib/constants";
 import heroBg from "@/assets/hero-bg.jpg";
-
-const WHATSAPP_LINK = "https://wa.me/5512999999999?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento.";
 
 const trust = [
   { icon: Shield, text: "Atendimento rápido" },
@@ -11,15 +10,8 @@ const trust = [
 
 const HeroSection = () => (
   <section className="relative min-h-[92vh] flex items-center pt-16" id="hero" aria-label="Apresentação Star Fire">
-    {/* Background */}
     <div className="absolute inset-0 -z-10">
-      <img
-        src={heroBg}
-        alt="Profissional realizando inspeção de segurança contra incêndio em edifício comercial"
-        className="w-full h-full object-cover"
-        loading="eager"
-        fetchPriority="high"
-      />
+      <img src={heroBg} alt="Profissional realizando inspeção de segurança contra incêndio em edifício comercial" className="w-full h-full object-cover" loading="eager" fetchPriority="high" />
       <div className="absolute inset-0" style={{ background: "var(--hero-overlay)" }} />
     </div>
 
@@ -36,20 +28,11 @@ const HeroSection = () => (
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 mb-14">
-          <a
-            href={WHATSAPP_LINK}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="cta-whatsapp-lg"
-            aria-label="Solicitar orçamento pelo WhatsApp"
-          >
+          <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="cta-whatsapp-lg" aria-label="Solicitar orçamento pelo WhatsApp">
             <MessageCircle size={20} aria-hidden="true" />
             Solicitar orçamento no WhatsApp
           </a>
-          <a
-            href="#servicos"
-            className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-white/30 px-7 py-3.5 text-base font-semibold text-white hover:bg-white/10 transition-colors"
-          >
+          <a href="#servicos" className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-white/30 px-7 py-3.5 text-base font-semibold text-white hover:bg-white/10 transition-colors">
             Ver serviços
           </a>
         </div>

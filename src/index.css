@@ -8,37 +8,26 @@
   :root {
     --background: 0 0% 100%;
     --foreground: 0 0% 10%;
-
     --card: 0 0% 100%;
     --card-foreground: 0 0% 10%;
-
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 10%;
-
     --primary: 0 72% 38%;
     --primary-foreground: 0 0% 100%;
-
     --secondary: 0 2% 96%;
     --secondary-foreground: 0 0% 10%;
-
     --muted: 0 2% 94%;
     --muted-foreground: 0 0% 40%;
-
     --accent: 0 72% 38%;
     --accent-foreground: 0 0% 100%;
-
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-
     --border: 0 0% 89%;
     --input: 0 0% 89%;
     --ring: 0 72% 38%;
-
     --radius: 0.5rem;
-
     --hero-overlay: linear-gradient(135deg, hsla(0, 0%, 6%, 0.90) 0%, hsla(0, 72%, 18%, 0.78) 100%);
-
-    --section-border: 0 0% 92%;
+    --whatsapp: 142 70% 35%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -64,20 +53,45 @@
   }
 }
 
+@layer components {
+  /* Shared section layout */
+  .section-padding {
+    @apply py-20 md:py-28;
+  }
+  .section-header {
+    @apply text-center mb-14;
+  }
+  .section-title {
+    @apply text-2xl md:text-[2rem] font-display font-bold mb-3;
+  }
+  .section-subtitle {
+    @apply text-muted-foreground max-w-2xl mx-auto text-base leading-relaxed;
+  }
+
+  /* CTA buttons */
+  .cta-whatsapp {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-7 py-3.5 text-base font-bold text-primary-foreground shadow-md hover:bg-primary/90 transition-all;
+  }
+  .cta-whatsapp-lg {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-8 py-4 text-lg font-bold text-primary-foreground shadow-lg hover:bg-primary/90 transition-all;
+  }
+
+  /* Cards */
+  .card-base {
+    @apply bg-card border rounded-xl hover:shadow-lg transition-shadow;
+  }
+
+  /* Form inputs */
+  .input-field {
+    @apply w-full rounded-lg border bg-card px-4 py-3.5 text-sm outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/40 transition-colors;
+  }
+
+  /* Contact icon circle */
+  .contact-icon {
+    @apply w-[3.25rem] h-[3.25rem] rounded-full flex items-center justify-center shrink-0;
+  }
+}
+
 html {
   scroll-behavior: smooth;
-}
-
-/* Shared CTA button style */
-.cta-whatsapp {
-  @apply inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-7 py-3.5 text-base font-bold text-primary-foreground shadow-md hover:bg-primary/90 transition-all;
-}
-
-.cta-whatsapp-lg {
-  @apply inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-8 py-4 text-lg font-bold text-primary-foreground shadow-lg hover:bg-primary/90 transition-all;
-}
-
-/* Section divider */
-.section-divider {
-  @apply border-t border-border/60;
 }
