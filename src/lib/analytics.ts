@@ -1,4 +1,6 @@
-﻿type Primitive = string | number | boolean | undefined | null;
+import { getCookieConsentStatus } from "@/lib/cookie-consent";
+
+type Primitive = string | number | boolean | undefined | null;
 type AnalyticsPayload = Record<string, Primitive>;
 
 declare global {
@@ -12,6 +14,8 @@ declare global {
 
 const GA_SCRIPT_ID = "starfire-ga-script";
 const META_SCRIPT_ID = "starfire-meta-script";
+
+const hasTrackingConsent = (): boolean => getCookieConsentStatus() === "accepted";
 
 const sanitizePayload = (payload: AnalyticsPayload = {}): Record<string, string | number | boolean> => {
   const entries = Object.entries(payload).filter(([, value]) => value !== undefined && value !== null);
@@ -49,8 +53,44 @@ const loadScript = (id: string, src: string): HTMLScriptElement => {
   return script;
 };
 
+const removeScriptById = (id: string): void => {
+  const element = document.getElementById(id);
+  if (element?.parentNode) {
+    element.parentNode.removeChild(element);
+  }
+};
+
+const removeScriptsBySrc = (srcPart: string): void => {
+  document.querySelectorAll(`script[src*="${srcPart}"]`).forEach((node) => node.parentNode?.removeChild(node));
+};
+
+export const disableAnalytics = (): void => {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  removeScriptById(GA_SCRIPT_ID);
+  removeScriptById(META_SCRIPT_ID);
+  removeScriptsBySrc("googletagmanager.com/gtag/js");
+  removeScriptsBySrc("connect.facebook.net/en_US/fbevents.js");
+
+  window.gtag = undefined;
+  window.fbq = undefined;
+  window.dataLayer = [];
+  window.__starfireAnalyticsInit = false;
+};
+
 export const initAnalytics = (): void => {
-  if (typeof window === "undefined" || window.__starfireAnalyticsInit) {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  if (!hasTrackingConsent()) {
+    disableAnalytics();
+    return;
+  }
+
+  if (window.__starfireAnalyticsInit) {
     return;
   }
 
@@ -100,6 +140,10 @@ export const initAnalytics = (): void => {
 
 export const trackEvent = (eventName: string, payload: AnalyticsPayload = {}): void => {
   if (typeof window === "undefined") {
+    return;
+  }
+
+  if (!hasTrackingConsent()) {
     return;
   }
 

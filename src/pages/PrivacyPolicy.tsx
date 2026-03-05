@@ -1,4 +1,4 @@
-﻿import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { SITE_NAME, EMAIL } from "@/lib/constants";
 
 const PrivacyPolicy = () => (
@@ -32,7 +32,15 @@ const PrivacyPolicy = () => (
         </section>
 
         <section>
-          <h2 className="mb-2 text-lg font-bold">5. Retenção e segurança</h2>
+          <h2 className="mb-2 text-lg font-bold">5. Cookies e tecnologias similares</h2>
+          <p>
+            Utilizamos cookies essenciais para funcionamento do site e, mediante consentimento, cookies analíticos para medir
+            desempenho e melhorar a experiência.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="mb-2 text-lg font-bold">6. Retenção e segurança</h2>
           <p>
             Mantemos dados pelo período necessário para atendimento comercial e obrigações legais, com controles de acesso e
             proteção adequada.
@@ -40,7 +48,7 @@ const PrivacyPolicy = () => (
         </section>
 
         <section>
-          <h2 className="mb-2 text-lg font-bold">6. Seus direitos</h2>
+          <h2 className="mb-2 text-lg font-bold">7. Seus direitos</h2>
           <p>Você pode solicitar acesso, correção ou exclusão de dados, além de revogar consentimento, pelo e-mail {EMAIL}.</p>
         </section>
       </div>
