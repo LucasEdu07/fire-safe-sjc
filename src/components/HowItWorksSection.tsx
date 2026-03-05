@@ -1,6 +1,5 @@
 import { MessageCircle, Search, Wrench, PackageCheck } from "lucide-react";
-
-const WHATSAPP_LINK = "https://wa.me/5512999999999?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento.";
+import { WHATSAPP_LINK } from "@/lib/constants";
 
 const steps = [
   { icon: MessageCircle, num: "1", title: "Fale conosco", desc: "Chame no WhatsApp e explique sua necessidade. Respondemos rápido." },
@@ -10,19 +9,17 @@ const steps = [
 ];
 
 const HowItWorksSection = () => (
-  <section id="como-funciona" className="py-20 md:py-28 section-divider" aria-label="Como funciona o processo">
+  <section id="como-funciona" className="section-padding" aria-label="Como funciona o processo">
     <div className="container">
-      <div className="text-center mb-14">
-        <h2 className="text-2xl md:text-[2rem] font-display font-bold mb-3">
-          Como Funciona
-        </h2>
-        <p className="text-muted-foreground max-w-xl mx-auto text-base leading-relaxed">
+      <div className="section-header">
+        <h2 className="section-title">Como Funciona</h2>
+        <p className="section-subtitle max-w-xl">
           Um processo simples, transparente e sem burocracia desnecessária.
         </p>
       </div>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-14">
-        {steps.map(({ icon: Icon, num, title, desc }) => (
+        {steps.map(({ num, title, desc }) => (
           <div key={num} className="text-center">
             <div className="w-16 h-16 rounded-full bg-primary text-primary-foreground flex items-center justify-center mx-auto mb-5 text-xl font-bold shadow-md" aria-hidden="true">
               {num}
@@ -37,13 +34,7 @@ const HowItWorksSection = () => (
         <p className="text-muted-foreground italic mb-6">
           "Você acompanha tudo com clareza — sem burocracia desnecessária."
         </p>
-        <a
-          href={WHATSAPP_LINK}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="cta-whatsapp"
-          aria-label="Iniciar processo pelo WhatsApp"
-        >
+        <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="cta-whatsapp" aria-label="Iniciar processo pelo WhatsApp">
           <MessageCircle size={18} aria-hidden="true" />
           Iniciar pelo WhatsApp
         </a>

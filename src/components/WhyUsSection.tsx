@@ -1,6 +1,5 @@
 import { ShieldCheck, MessageSquare, Package, FileText, MessageCircle } from "lucide-react";
-
-const WHATSAPP_LINK = "https://wa.me/5512999999999?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento.";
+import { WHATSAPP_LINK } from "@/lib/constants";
 
 const reasons = [
   { icon: ShieldCheck, title: "Foco em conformidade e segurança", desc: "Garantimos que sua empresa atenda todas as exigências legais de prevenção contra incêndio." },
@@ -10,18 +9,18 @@ const reasons = [
 ];
 
 const WhyUsSection = () => (
-  <section className="py-20 md:py-28 section-divider" aria-label="Diferenciais da Star Fire">
+  <section className="section-padding" aria-label="Diferenciais da Star Fire">
     <div className="container">
-      <div className="text-center mb-14">
-        <h2 className="text-2xl md:text-[2rem] font-display font-bold mb-3">Por que escolher a Star Fire?</h2>
-        <p className="text-muted-foreground max-w-2xl mx-auto text-base leading-relaxed">
+      <div className="section-header">
+        <h2 className="section-title">Por que escolher a Star Fire?</h2>
+        <p className="section-subtitle">
           Nosso trabalho é deixar sua operação segura e regular — sem complicar sua rotina.
         </p>
       </div>
 
       <div className="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto mb-12">
         {reasons.map(({ icon: Icon, title, desc }) => (
-          <div key={title} className="bg-card border rounded-xl p-6 hover:shadow-lg transition-shadow">
+          <div key={title} className="card-base p-6">
             <div className="w-11 h-11 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
               <Icon size={22} className="text-primary" aria-hidden="true" />
             </div>
@@ -32,13 +31,7 @@ const WhyUsSection = () => (
       </div>
 
       <div className="text-center">
-        <a
-          href={WHATSAPP_LINK}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="cta-whatsapp"
-          aria-label="Solicitar orçamento pelo WhatsApp"
-        >
+        <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="cta-whatsapp" aria-label="Solicitar orçamento pelo WhatsApp">
           <MessageCircle size={18} aria-hidden="true" />
           Fale com a Star Fire
         </a>
