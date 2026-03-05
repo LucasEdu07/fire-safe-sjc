@@ -8,9 +8,9 @@ const WhatsAppFloat = () => (
     target="_blank"
     rel="noopener noreferrer"
     aria-label="Chamar no WhatsApp"
-    className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-green-600 text-white flex items-center justify-center shadow-lg hover:bg-green-700 transition-colors"
+    className="fixed bottom-6 right-6 z-50 w-[3.5rem] h-[3.5rem] rounded-full bg-green-600 text-white flex items-center justify-center shadow-xl hover:bg-green-700 hover:scale-105 transition-all"
   >
-    <MessageCircle size={28} />
+    <MessageCircle size={28} aria-hidden="true" />
   </a>
 );
 

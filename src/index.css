@@ -7,22 +7,22 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 0 0% 12%;
+    --foreground: 0 0% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 12%;
+    --card-foreground: 0 0% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 12%;
+    --popover-foreground: 0 0% 10%;
 
     --primary: 0 72% 38%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 12%;
+    --secondary: 0 2% 96%;
+    --secondary-foreground: 0 0% 10%;
 
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
+    --muted: 0 2% 94%;
+    --muted-foreground: 0 0% 40%;
 
     --accent: 0 72% 38%;
     --accent-foreground: 0 0% 100%;
@@ -30,13 +30,15 @@
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
+    --border: 0 0% 89%;
+    --input: 0 0% 89%;
     --ring: 0 72% 38%;
 
     --radius: 0.5rem;
 
-    --hero-overlay: linear-gradient(135deg, hsla(0, 0%, 8%, 0.88) 0%, hsla(0, 72%, 20%, 0.75) 100%);
+    --hero-overlay: linear-gradient(135deg, hsla(0, 0%, 6%, 0.90) 0%, hsla(0, 72%, 18%, 0.78) 100%);
+
+    --section-border: 0 0% 92%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -54,13 +56,28 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-background text-foreground font-sans antialiased;
   }
   h1, h2, h3 {
     font-family: 'Plus Jakarta Sans', sans-serif;
+    @apply text-foreground;
   }
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Shared CTA button style */
+.cta-whatsapp {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-7 py-3.5 text-base font-bold text-primary-foreground shadow-md hover:bg-primary/90 transition-all;
+}
+
+.cta-whatsapp-lg {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-8 py-4 text-lg font-bold text-primary-foreground shadow-lg hover:bg-primary/90 transition-all;
+}
+
+/* Section divider */
+.section-divider {
+  @apply border-t border-border/60;
 }
