@@ -1,73 +1,56 @@
-# Welcome to your Lovable project
+﻿# Star Fire Landing Page
 
-## Project info
+Landing page premium de conversao para servicos de seguranca contra incendio da Star Fire, com foco em Sao Jose dos Campos e Vale do Paraiba.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Stack
 
-## How can I edit this code?
+- Vite + React + TypeScript
+- Tailwind CSS + shadcn/ui
+- React Hook Form + Zod
+- Vercel Serverless Function (`/api/leads`)
+- Integracao de analytics com GA4 e Meta Pixel
 
-There are several ways of editing your application.
+## Rodando localmente
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## Variaveis de ambiente
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Crie um arquivo `.env` usando `.env.example` como base.
 
-**Use GitHub Codespaces**
+Variaveis principais:
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- `VITE_SITE_URL`
+- `VITE_WHATSAPP_NUMBER`
+- `VITE_PHONE_DISPLAY`
+- `VITE_CONTACT_EMAIL`
+- `VITE_COMPANY_CNPJ`
+- `VITE_GA4_MEASUREMENT_ID`
+- `VITE_META_PIXEL_ID`
+- `RESEND_API_KEY`
+- `LEAD_EMAIL_TO`
+- `LEAD_EMAIL_FROM`
+- `GOOGLE_PLACES_API_KEY`
+- `GOOGLE_PLACE_ID` (opcional, recomendado para maior estabilidade)
+- `GOOGLE_PLACE_QUERY` (usado se `GOOGLE_PLACE_ID` nao for informado)
 
-## What technologies are used for this project?
+## Scripts
 
-This project is built with:
+```bash
+npm run dev
+npm run build
+npm run preview
+npm run test
+npm run lint
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Deploy
 
-## How can I deploy this project?
+Deploy recomendado na Vercel.
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+- Frontend servido como SPA.
+- Endpoint serverless em `api/leads.ts` para envio de leads por e-mail via Resend.
+- Endpoint serverless em `api/google-reviews.ts` para buscar reviews oficiais via Google Places API.
