@@ -7,8 +7,8 @@ import {
 
 const faqs = [
   {
-    q: "O que é AVCB e quando preciso?",
-    a: "O AVCB (Auto de Vistoria do Corpo de Bombeiros) é o documento que comprova que sua edificação atende às normas de segurança contra incêndio. Ele é obrigatório para a maioria dos estabelecimentos comerciais, industriais e residenciais multifamiliares.",
+    q: "O que é AVCB e quando preciso dele?",
+    a: "O AVCB (Auto de Vistoria do Corpo de Bombeiros) é o documento que comprova que sua edificação atende às normas de segurança contra incêndio. Ele é obrigatório para a maioria dos estabelecimentos comerciais, industriais e residenciais multifamiliares em São José dos Campos e região.",
   },
   {
     q: "Qual a diferença entre AVCB e CLCB?",
@@ -20,33 +20,35 @@ const faqs = [
   },
   {
     q: "Vocês atendem empresas e condomínios?",
-    a: "Sim! Atendemos empresas de todos os portes, comércios, restaurantes, condomínios residenciais e comerciais, além de eventos.",
+    a: "Sim! Atendemos empresas de todos os portes, comércios, restaurantes, condomínios residenciais e comerciais, além de eventos em São José dos Campos e Vale do Paraíba.",
   },
   {
-    q: "Quanto tempo leva para regularizar?",
-    a: "O prazo varia conforme a complexidade do imóvel e as exigências do Corpo de Bombeiros. Em média, o processo pode levar de 30 a 90 dias. Fazemos o acompanhamento completo.",
+    q: "Quanto tempo leva para regularizar minha empresa?",
+    a: "O prazo varia conforme a complexidade do imóvel e as exigências do Corpo de Bombeiros. Em média, o processo pode levar de 30 a 90 dias. Fazemos o acompanhamento completo para agilizar.",
   },
   {
     q: "Como solicitar um orçamento?",
-    a: "É simples! Basta clicar no botão de WhatsApp e nos enviar uma mensagem com o tipo de serviço que precisa. Respondemos rapidamente.",
+    a: "É simples! Basta clicar no botão de WhatsApp em qualquer lugar da página e nos enviar uma mensagem com o tipo de serviço que precisa. Respondemos rapidamente.",
   },
 ];
 
 const FAQSection = () => (
-  <section id="faq" className="py-20 md:py-28 bg-secondary">
+  <section id="faq" className="py-20 md:py-28 bg-secondary" aria-label="Perguntas frequentes">
     <div className="container max-w-3xl">
-      <h2 className="text-2xl md:text-3xl font-display font-bold text-center mb-4">Dúvidas Frequentes</h2>
-      <p className="text-muted-foreground text-center mb-12">
-        Respondemos as perguntas mais comuns dos nossos clientes.
-      </p>
+      <div className="text-center mb-14">
+        <h2 className="text-2xl md:text-[2rem] font-display font-bold mb-3">Dúvidas Frequentes</h2>
+        <p className="text-muted-foreground text-base">
+          Respondemos as perguntas mais comuns sobre segurança contra incêndio.
+        </p>
+      </div>
 
       <Accordion type="single" collapsible className="space-y-3">
         {faqs.map((faq, i) => (
-          <AccordionItem key={i} value={`faq-${i}`} className="bg-card border rounded-lg px-6">
-            <AccordionTrigger className="text-left font-semibold text-sm md:text-base hover:no-underline">
+          <AccordionItem key={i} value={`faq-${i}`} className="bg-card border rounded-xl px-6">
+            <AccordionTrigger className="text-left font-bold text-sm md:text-base hover:no-underline py-5">
               {faq.q}
             </AccordionTrigger>
-            <AccordionContent className="text-sm text-muted-foreground leading-relaxed">
+            <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-5">
               {faq.a}
             </AccordionContent>
           </AccordionItem>
