@@ -1,45 +1,37 @@
-import { useRef } from "react";
-import { ChartNoAxesCombined, FileText, MessageCircle, MessageSquare, Package, ShieldCheck } from "lucide-react";
+import { MessageCircle, MessageSquare, Package, ShieldCheck } from "lucide-react";
 import { WHATSAPP_LINK } from "@/lib/constants";
 import { trackWhatsAppClick } from "@/lib/analytics";
-import MobileCarouselControls from "@/components/MobileCarouselControls";
+import { sectionImages } from "@/lib/section-images";
 
 const reasons = [
   {
     icon: ShieldCheck,
-    title: "Conformidade com visão estratégica",
-    desc: "Atuamos para reduzir risco regulatório e fortalecer a continuidade da sua operação.",
+    title: "Leitura técnica objetiva",
+    desc: "Diagnóstico e prioridade definidos sem excesso de ruído.",
   },
   {
     icon: MessageSquare,
-    title: "Comunicação objetiva para decisores",
-    desc: "Status claros, prioridades definidas e próximos passos sem ruído técnico.",
+    title: "Comunicação para decisão",
+    desc: "Equipe, status e próximos passos falam a língua do gestor.",
   },
   {
     icon: Package,
-    title: "Operação integrada",
-    desc: "Diagnóstico, adequações, treinamento e documentação no mesmo fluxo.",
+    title: "Frente integrada",
+    desc: "Campo, adequações e documentação seguem em uma mesma condução.",
   },
-  {
-    icon: FileText,
-    title: "Documentação pronta para auditoria",
-    desc: "Checklist, histórico e trilha técnica organizados para fiscalizações e renovações.",
-  },
-];
+] as const;
 
 const indicators = [
-  { value: "SLA no mesmo dia", label: "Retorno comercial para iniciar o diagnóstico" },
-  { value: "Equipe multidisciplinar", label: "Projetos, campo e documentação técnica" },
-  { value: "Ritmo previsível", label: "Gestão com cronograma e checkpoints claros" },
-];
+  { value: "Mesmo dia", label: "Retorno inicial" },
+  { value: "Equipe técnica", label: "Campo e documentação" },
+  { value: "Uma frente", label: "Mais clareza na operação" },
+] as const;
 
 const WhyUsSection = () => {
-  const indicatorsRef = useRef<HTMLDivElement>(null);
-
   return (
     <section
       id="diferenciais"
-      className="section-padding relative overflow-hidden bg-[linear-gradient(180deg,rgba(229,219,209,0.74)_0%,rgba(224,212,200,0.7)_100%)]"
+      className="section-padding relative overflow-hidden bg-[linear-gradient(180deg,rgba(231,220,210,0.78)_0%,rgba(223,211,199,0.72)_100%)]"
       aria-label="Diferenciais da Star Fire"
     >
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/22 to-transparent" aria-hidden="true" />
@@ -50,70 +42,71 @@ const WhyUsSection = () => {
       />
       <div className="container relative z-10">
         <div className="section-header">
-          <span className="section-kicker">Posicionamento premium</span>
-          <h2 className="section-title">Por que empresas exigentes escolhem a Star Fire</h2>
-          <p className="section-subtitle max-w-3xl">
-            Mais do que executar serviços, estruturamos uma jornada técnica para blindar sua operação e manter previsibilidade.
-          </p>
+          <span className="section-kicker">Por que Star Fire</span>
+          <h2 className="section-title">Uma apresentação mais clara para quem precisa decidir rápido</h2>
+          <p className="section-subtitle max-w-3xl">Autoridade técnica sem transformar a landing em explicação longa.</p>
         </div>
 
-        <div className="premium-surface mb-8 p-3 sm:p-6 md:p-8">
-          <MobileCarouselControls targetRef={indicatorsRef} label="Navegar diferenciais" hideAboveClass="md:hidden" />
-          <div
-            ref={indicatorsRef}
-            className="flex snap-x snap-mandatory gap-3 overflow-x-hidden scroll-smooth pb-1 md:grid md:grid-cols-3 md:gap-4 md:overflow-visible md:pb-0"
-          >
-            {indicators.map((item) => (
-              <div key={item.value} className="card-base min-w-full snap-start p-4 md:min-w-0 md:p-5">
-                <p className="text-base font-bold text-primary md:text-lg">{item.value}</p>
+        <div className="section-shell p-4 sm:p-6 md:p-8 lg:p-10">
+          <div className="relative grid gap-3 pb-1 lg:grid-cols-3 lg:gap-4 lg:pb-0">
+            {indicators.map((item, index) => (
+              <div
+                key={item.value}
+                className="premium-panel p-4 md:p-5"
+                data-reveal={index === 0 ? "slide-left" : "zoom"}
+                data-reveal-order={index}
+              >
+                <p className="text-[0.7rem] font-bold uppercase tracking-[0.16em] text-primary">{`0${index + 1}`}</p>
+                <p className="mt-2 text-lg font-bold text-foreground">{item.value}</p>
                 <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{item.label}</p>
               </div>
             ))}
           </div>
-        </div>
 
-        <div className="mx-auto mb-12 grid max-w-5xl gap-3.5 sm:grid-cols-2 sm:gap-5">
-          {reasons.map(({ icon: Icon, title, desc }) => (
-            <article key={title} className="card-base p-4 sm:p-6">
-              <div className="mb-3 flex items-center gap-2.5 sm:mb-4 sm:gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 sm:h-11 sm:w-11">
-                  <Icon size={20} className="sm:h-[22px] sm:w-[22px]" aria-hidden="true" />
-                </div>
-                <span className="metric-pill">Diferencial estratégico</span>
+          <div className="relative mt-6 grid gap-4 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
+            <div className="grid gap-4">
+              {reasons.map(({ icon: Icon, title, desc }, index) => (
+                <article
+                  key={title}
+                  className="card-base p-5 sm:p-6"
+                  data-reveal={index % 2 === 0 ? "slide-left" : "slide-right"}
+                  data-reveal-order={index + 3}
+                >
+                  <div className="mb-4 flex items-center gap-3">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/12 text-primary">
+                      <Icon size={20} aria-hidden="true" />
+                    </div>
+                    <span className="metric-pill">Diferencial</span>
+                  </div>
+                  <h3 className="text-lg font-bold">{title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{desc}</p>
+                </article>
+              ))}
+            </div>
+
+            <aside className="editorial-image-frame min-h-[32rem]" data-reveal="media" data-reveal-order="7">
+              <div className="editorial-image-wrap">
+                <img src={sectionImages["why-us"].imageSrc} alt={sectionImages["why-us"].alt} className="editorial-image" loading="lazy" />
               </div>
-              <h3 className="mb-1.5 text-[0.98rem] font-bold sm:mb-2 sm:text-lg">{title}</h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">{desc}</p>
-            </article>
-          ))}
-        </div>
-
-        <div className="mx-auto mb-8 grid max-w-5xl gap-2.5 sm:grid-cols-2 sm:gap-3">
-          <div className="rounded-xl border border-border/70 bg-card/75 p-3.5 sm:p-4">
-            <p className="text-sm font-bold text-primary">Governança técnica</p>
-            <p className="mt-1 text-xs leading-relaxed text-muted-foreground">Controle de prazos, evidências e histórico para reduzir risco operacional.</p>
+              <div className="editorial-caption">
+                <span className="premium-badge w-fit">Coordenação técnica</span>
+                <p className="mt-4 max-w-md text-sm leading-relaxed text-white/80">
+                  A leitura certa encurta o caminho entre exigência, decisão e execução.
+                </p>
+                <a
+                  href={WHATSAPP_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackWhatsAppClick("diferenciais", "diferenciais_whatsapp")}
+                  className="cta-whatsapp mt-5 w-full justify-center sm:w-auto"
+                  aria-label="Solicitar orçamento pelo WhatsApp"
+                >
+                  <MessageCircle size={18} aria-hidden="true" />
+                  Falar com especialista
+                </a>
+              </div>
+            </aside>
           </div>
-          <div className="rounded-xl border border-border/70 bg-card/75 p-3.5 sm:p-4">
-            <p className="text-sm font-bold text-primary">Relacionamento consultivo</p>
-            <p className="mt-1 text-xs leading-relaxed text-muted-foreground">Orientação objetiva para decisões rápidas, sem depender de múltiplos fornecedores.</p>
-          </div>
-        </div>
-
-        <div className="premium-surface mx-auto max-w-4xl p-4 text-center sm:p-8">
-          <ChartNoAxesCombined size={20} className="mx-auto mb-3 text-primary" aria-hidden="true" />
-          <p className="mb-6 text-sm leading-relaxed text-muted-foreground sm:text-base">
-            "Nosso compromisso é transformar exigências técnicas em segurança operacional real para o seu negócio."
-          </p>
-          <a
-            href={WHATSAPP_LINK}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => trackWhatsAppClick("diferenciais", "diferenciais_whatsapp")}
-            className="cta-whatsapp w-full sm:w-auto"
-            aria-label="Solicitar orçamento pelo WhatsApp"
-          >
-            <MessageCircle size={18} aria-hidden="true" />
-            Falar com especialista
-          </a>
         </div>
       </div>
     </section>

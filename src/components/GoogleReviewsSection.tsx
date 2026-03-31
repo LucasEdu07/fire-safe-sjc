@@ -117,13 +117,13 @@ const getUtcDateFromRelativeDescription = (description: string, now: Date): Date
   return null;
 };
 
-const renderStars = (value: number) => {
+const renderStars = (value: number, size = 16) => {
   const rounded = Math.max(0, Math.min(5, Math.round(value)));
 
   return (
     <div className="flex items-center gap-1 text-amber-500" aria-label={`Nota ${rounded} de 5`}>
       {Array.from({ length: 5 }).map((_, index) => (
-        <Star key={index} size={16} fill={index < rounded ? "currentColor" : "none"} />
+        <Star key={index} size={size} fill={index < rounded ? "currentColor" : "none"} />
       ))}
     </div>
   );
@@ -188,12 +188,14 @@ const GoogleReviewsSection = () => {
     };
   }, []);
 
-  const reviews = useMemo(() => state.reviews.slice(0, 6), [state.reviews]);
+  const reviews = useMemo(() => state.reviews.slice(0, 4), [state.reviews]);
+  const featuredReview = reviews[0];
+  const secondaryReviews = reviews.slice(1, 4);
 
   return (
     <section
       id="depoimentos-clientes"
-      className="section-padding relative overflow-hidden bg-[linear-gradient(180deg,rgba(238,230,222,0.76)_0%,rgba(232,222,211,0.66)_100%)]"
+      className="section-padding relative overflow-hidden bg-[linear-gradient(180deg,rgba(238,230,222,0.8)_0%,rgba(230,219,208,0.72)_100%)]"
       aria-label="Depoimentos de clientes"
     >
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" aria-hidden="true" />
@@ -206,114 +208,137 @@ const GoogleReviewsSection = () => {
         <div className="section-header">
           <span className="section-kicker">Confiança validada por clientes</span>
           <h2 className="section-title">Depoimentos de clientes</h2>
-          <p className="section-subtitle">
-            Comentários reais de quem já contou com a Star Fire para regularizar e proteger sua operação.
-          </p>
+          <p className="section-subtitle">Leituras reais de quem já confiou na Star Fire.</p>
         </div>
 
-        <div className="premium-surface mx-auto max-w-6xl bg-gradient-to-b from-card/95 via-card/88 to-secondary/60 p-4 sm:p-6 md:p-10">
-          <div className="mb-6 flex flex-col gap-4 sm:mb-8 sm:gap-5 lg:flex-row lg:items-end lg:justify-between">
+        <div className="section-shell review-shell mx-auto max-w-6xl p-4 sm:p-6 md:p-8 lg:p-10">
+          <div className="section-spotlight" />
+
+          <div className="review-intro" data-reveal="slide-left" data-reveal-order="0">
             <div>
-              <p className="text-sm font-semibold uppercase tracking-wide text-primary">Experiência comprovada</p>
-              <h3 className="text-2xl font-display font-bold md:text-3xl">{state.place_name}</h3>
+              <p className="text-[0.72rem] font-bold uppercase tracking-[0.16em] text-primary">Experiência comprovada</p>
+              <h3 className="mt-2 text-[1.8rem] font-display font-bold sm:text-[2.2rem]">{state.place_name}</h3>
             </div>
 
-            <div className="rounded-xl border bg-card/90 px-4 py-3 shadow-sm">
-              <div className="mb-1 flex items-center gap-2">
-                {renderStars(state.rating)}
-                <span className="text-sm font-semibold">{state.rating ? state.rating.toFixed(1) : "-"}</span>
+            <div className="review-summary-row" data-reveal="slide-right" data-reveal-order="1">
+              <div className="review-meta-card">
+                {renderStars(state.rating, 15)}
+                <div className="review-meta-copy">
+                  <p className="review-meta-value">{state.rating ? state.rating.toFixed(1) : "-"}</p>
+                  <p className="review-meta-label">{state.user_ratings_total} avaliações públicas</p>
+                </div>
               </div>
+
+              <a
+                href={state.place_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackEvent("click_cta_secondary", { section: "reviews", cta_label: "reviews_google_link" })}
+                className="review-link-card"
+              >
+                <span className="review-link-copy">Ver perfil completo no Google</span>
+                <ExternalLink size={15} aria-hidden="true" />
+              </a>
             </div>
           </div>
-
-          <div className="card-base mb-6 flex flex-col items-start gap-3 p-4 sm:mb-7 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-xs text-muted-foreground">
-              {state.source === "api"
-                ? "Depoimentos retirados do perfil público da empresa."
-                : "Depoimentos selecionados do perfil público da empresa."}
-            </p>
-            <a
-              href={state.place_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => trackEvent("click_cta_secondary", { section: "reviews", cta_label: "reviews_google_link" })}
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline sm:shrink-0"
-            >
-              Ver todos
-              <ExternalLink size={14} aria-hidden="true" />
-            </a>
-          </div>
-
-          {!loading && reviews.length > 1 ? (
-            <MobileCarouselControls targetRef={reviewsCarouselRef} label="Navegar depoimentos" hideAboveClass="md:hidden" />
-          ) : null}
 
           {loading ? (
-            <div
-              ref={reviewsCarouselRef}
-              className="flex gap-3 overflow-x-hidden scroll-smooth pb-1 md:grid md:gap-4 md:overflow-visible md:pb-0 md:grid-cols-2 xl:grid-cols-3"
-            >
-              {Array.from({ length: 6 }).map((_, index) => (
-                <div key={index} className="h-40 min-w-full animate-pulse rounded-2xl border bg-card/64 md:h-44 md:min-w-0" />
-              ))}
+            <div className="grid gap-4 lg:grid-cols-[1.14fr_0.86fr]">
+              <div className="h-[24rem] animate-pulse rounded-[1.6rem] border bg-card/60" />
+              <div className="grid gap-3">
+                {Array.from({ length: 3 }).map((_, index) => (
+                  <div key={index} className="h-40 animate-pulse rounded-[1.35rem] border bg-card/60" />
+                ))}
+              </div>
             </div>
-          ) : reviews.length > 0 ? (
-            <div
-              ref={reviewsCarouselRef}
-              className="flex snap-x snap-mandatory gap-3 overflow-x-hidden scroll-smooth pb-1 md:grid md:gap-4 md:overflow-visible md:pb-0 md:grid-cols-2 xl:grid-cols-3"
-            >
-              {reviews.map((review, index) => {
-                const parsedDate = getUtcDateFromRelativeDescription(review.relative_time_description, utcNow);
-                const reviewDateLabel = `Publicado em ${formatUtcDate(parsedDate || utcNow)}`;
-
-                return (
-                  <article key={`${review.author_name}-${index}`} className="card-base group h-full min-w-full snap-start bg-card/92 p-4 md:min-w-0 md:p-5">
-                    <div className="mb-3 flex items-start justify-between gap-2.5 md:mb-4 md:gap-3">
-                      <div className="flex items-center gap-3">
-                        {review.profile_photo_url ? (
-                          <img
-                            src={review.profile_photo_url}
-                            alt={`Foto de ${review.author_name}`}
-                            className="h-9 w-9 rounded-full border object-cover md:h-10 md:w-10"
-                            loading="lazy"
-                          />
-                        ) : (
-                          <div className="h-9 w-9 rounded-full border bg-primary/10 md:h-10 md:w-10" />
-                        )}
-                        <div>
-                          <p className="text-sm font-semibold leading-tight">{review.author_name || "Cliente"}</p>
-                          <p className="text-[11px] text-muted-foreground">{reviewDateLabel}</p>
-                        </div>
+          ) : featuredReview ? (
+            <div className="review-layout">
+              <article className="review-feature-card" data-reveal="quote" data-reveal-order="2">
+                <div className="premium-grid-overlay" />
+                <div className="relative">
+                  <div className="review-feature-header">
+                    <div className="review-author-block">
+                      {featuredReview.profile_photo_url ? (
+                        <img
+                          src={featuredReview.profile_photo_url}
+                          alt={`Foto de ${featuredReview.author_name}`}
+                          className="review-author-avatar"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div className="review-author-avatar bg-white/10" />
+                      )}
+                      <div>
+                        <p className="review-author-name">{featuredReview.author_name || "Cliente"}</p>
+                        <p className="review-author-date">
+                          Publicado em {formatUtcDate(getUtcDateFromRelativeDescription(featuredReview.relative_time_description, utcNow) || utcNow)}
+                        </p>
                       </div>
-                      {renderStars(review.rating)}
                     </div>
+                    {renderStars(featuredReview.rating, 15)}
+                  </div>
 
-                    <Quote size={16} className="mb-2 text-primary/60 transition-colors duration-300 group-hover:text-primary" aria-hidden="true" />
-                    <p className="line-clamp-5 text-sm leading-relaxed text-muted-foreground">{review.text || "Comentário indisponível."}</p>
-                  </article>
-                );
-              })}
+                  <Quote size={26} className="mb-5 text-[#f8ddcf]" aria-hidden="true" />
+                  <p className="review-feature-text">{featuredReview.text || "Comentário indisponível."}</p>
+                </div>
+              </article>
+
+              <div className="review-secondary-column" data-reveal="slide-right" data-reveal-order="3">
+                {secondaryReviews.length > 1 ? (
+                  <MobileCarouselControls targetRef={reviewsCarouselRef} label="Navegar depoimentos" hideAboveClass="lg:hidden" className="relative z-10 mb-3" />
+                ) : null}
+
+                <div ref={reviewsCarouselRef} className="review-secondary-grid">
+                  {secondaryReviews.length > 0 ? (
+                    secondaryReviews.map((review, index) => {
+                      const parsedDate = getUtcDateFromRelativeDescription(review.relative_time_description, utcNow);
+                      const reviewDateLabel = `Publicado em ${formatUtcDate(parsedDate || utcNow)}`;
+
+                      return (
+                        <article
+                          key={`${review.author_name}-${index}`}
+                          className="review-secondary-card"
+                          data-reveal={index % 2 === 0 ? "quote" : "blur"}
+                          data-reveal-order={index + 4}
+                        >
+                          <div className="review-secondary-header">
+                            <div className="review-author-block review-author-block-compact">
+                              {review.profile_photo_url ? (
+                                <img
+                                  src={review.profile_photo_url}
+                                  alt={`Foto de ${review.author_name}`}
+                                  className="review-author-avatar review-author-avatar-compact"
+                                  loading="lazy"
+                                />
+                              ) : (
+                                <div className="review-author-avatar review-author-avatar-compact bg-primary/10" />
+                              )}
+                              <div>
+                                <p className="review-author-name review-author-name-compact">{review.author_name || "Cliente"}</p>
+                                <p className="review-author-date review-author-date-compact">{reviewDateLabel}</p>
+                              </div>
+                            </div>
+                            {renderStars(review.rating, 13)}
+                          </div>
+
+                          <Quote size={15} className="mb-2 text-primary/60" aria-hidden="true" />
+                          <p className="review-secondary-text">{review.text || "Comentário indisponível."}</p>
+                        </article>
+                      );
+                    })
+                  ) : (
+                    <div className="review-empty-card">
+                      <p className="text-sm text-muted-foreground">Outros depoimentos não puderam ser exibidos agora.</p>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           ) : (
-            <div className="rounded-xl border bg-secondary/40 p-6 text-center">
-              <p className="text-sm text-muted-foreground">Ainda não foi possível carregar os depoimentos no momento.</p>
+            <div className="review-empty-card">
+              <p className="text-sm text-muted-foreground">Os depoimentos não puderam ser carregados no momento.</p>
             </div>
           )}
-
-          <div className="mt-6 grid gap-2.5 sm:grid-cols-3 sm:gap-3">
-            <div className="rounded-xl border border-border/70 bg-card/82 p-3 text-center">
-              <p className="text-xs font-semibold text-muted-foreground">Compromisso</p>
-              <p className="text-sm font-bold text-primary">Atendimento consultivo</p>
-            </div>
-            <div className="rounded-xl border border-border/70 bg-card/82 p-3 text-center">
-              <p className="text-xs font-semibold text-muted-foreground">Foco</p>
-              <p className="text-sm font-bold text-primary">Regularização previsível</p>
-            </div>
-            <div className="rounded-xl border border-border/70 bg-card/82 p-3 text-center">
-              <p className="text-xs font-semibold text-muted-foreground">Resultado</p>
-              <p className="text-sm font-bold text-primary">Operação protegida</p>
-            </div>
-          </div>
         </div>
       </div>
     </section>

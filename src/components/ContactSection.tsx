@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Phone, Mail, MessageCircle, MapPin, Instagram, Linkedin } from "lucide-react";
+import { Instagram, Linkedin, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
@@ -126,20 +126,18 @@ const ContactSection = () => {
       />
       <div className="container relative z-10">
         <div className="section-header">
-          <span className="section-kicker">Atendimento consultivo</span>
-          <h2 className="section-title">Vamos conversar sobre sua regularização?</h2>
-          <p className="section-subtitle max-w-xl">
-            Envie sua necessidade e receba orientação técnica com visão estratégica, agilidade e compromisso com resultado.
-          </p>
+          <span className="section-kicker">Contato</span>
+          <h2 className="section-title">Fale com a Star Fire</h2>
+          <p className="section-subtitle max-w-xl">Envie o cenário da sua unidade e receba o direcionamento inicial.</p>
         </div>
 
-        <div className="premium-surface mx-auto grid max-w-6xl gap-6 p-4 sm:gap-8 sm:p-6 md:grid-cols-[0.9fr_1.1fr] md:gap-10 md:p-8">
+        <div className="section-shell mx-auto grid max-w-6xl gap-6 p-4 sm:p-6 md:grid-cols-[0.92fr_1.08fr] md:gap-8 md:p-8 lg:p-10">
           <div className="order-2 space-y-4 md:order-1">
-            <div className="rounded-2xl border border-primary/20 bg-primary/8 p-4">
-              <p className="text-sm font-bold text-primary">Canal prioritário para atendimento</p>
-              <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                Nosso time comercial e técnico retorna rapidamente para mapear seu cenário e orientar os próximos passos.
-              </p>
+            <div className="premium-panel p-5 sm:p-6" data-reveal="slide-left" data-reveal-order="0">
+              <div className="relative">
+                <p className="text-[0.72rem] font-bold uppercase tracking-[0.16em] text-primary">Canal prioritário para atendimento</p>
+                <p className="mt-1 text-sm leading-relaxed text-muted-foreground">WhatsApp para resposta rápida e formulário para briefing objetivo.</p>
+              </div>
             </div>
 
             <a
@@ -149,35 +147,39 @@ const ContactSection = () => {
               onClick={() => trackWhatsAppClick("contato", "contato_whatsapp_card")}
               className="card-base flex items-center gap-4 border-2 border-whatsapp/20 p-4 sm:p-5"
               aria-label="Contato pelo WhatsApp"
+              data-reveal="slide-left"
+              data-reveal-order="1"
             >
               <div className="contact-icon whatsapp-badge bg-whatsapp text-white">
                 <WhatsAppIcon size={24} className="whatsapp-icon-float" />
               </div>
-              <div>
+              <div className="min-w-0">
                 <p className="text-base font-bold">WhatsApp comercial</p>
                 <p className="text-sm text-muted-foreground">{PHONE_DISPLAY}</p>
               </div>
             </a>
 
-            <a href={`tel:+${PHONE}`} className="card-base flex items-center gap-4 p-4 sm:p-5" aria-label="Ligar para Star Fire">
-              <div className="contact-icon bg-primary text-primary-foreground">
-                <Phone size={22} aria-hidden="true" />
-              </div>
-              <div>
-                <p className="text-base font-bold">Telefone</p>
-                <p className="text-sm text-muted-foreground">{PHONE_DISPLAY}</p>
-              </div>
-            </a>
+            <div className="grid gap-3 sm:grid-cols-2" data-reveal="blur" data-reveal-order="2">
+              <a href={`tel:+${PHONE}`} className="card-base flex items-center gap-4 p-4 sm:p-5" aria-label="Ligar para Star Fire">
+                <div className="contact-icon bg-primary text-primary-foreground">
+                  <Phone size={22} aria-hidden="true" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-base font-bold">Telefone</p>
+                  <p className="text-sm text-muted-foreground">{PHONE_DISPLAY}</p>
+                </div>
+              </a>
 
-            <a href={`mailto:${EMAIL}`} className="card-base flex items-center gap-4 p-4 sm:p-5" aria-label="Enviar e-mail para Star Fire">
-              <div className="contact-icon bg-foreground text-background">
-                <Mail size={22} aria-hidden="true" />
-              </div>
-              <div>
-                <p className="text-base font-bold">E-mail</p>
-                <p className="text-sm text-muted-foreground">{EMAIL}</p>
-              </div>
-            </a>
+              <a href={`mailto:${EMAIL}`} className="card-base flex items-center gap-4 p-4 sm:p-5" aria-label="Enviar e-mail para Star Fire">
+                <div className="contact-icon bg-foreground text-background">
+                  <Mail size={22} aria-hidden="true" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-base font-bold">E-mail</p>
+                  <p className="break-all text-sm text-muted-foreground">{EMAIL}</p>
+                </div>
+              </a>
+            </div>
 
             <a
               href={mapsSearchUrl}
@@ -186,23 +188,25 @@ const ContactSection = () => {
               onClick={() => trackEvent("click_cta_secondary", { section: "contato", cta_label: "contato_endereco_mapa" })}
               className="card-base flex items-center gap-4 p-4 sm:p-5"
               aria-label="Abrir endereço da Star Fire no Google Maps"
+              data-reveal="blur"
+              data-reveal-order="3"
             >
               <div className="contact-icon bg-accent text-accent-foreground">
                 <MapPin size={22} aria-hidden="true" />
               </div>
-              <div>
+              <div className="min-w-0">
                 <p className="text-base font-bold">Endereço</p>
                 <p className="text-sm text-muted-foreground">{COMPANY_ADDRESS}</p>
               </div>
             </a>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-3" data-reveal="blur" data-reveal-order="4">
               <a
                 href={INSTAGRAM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackEvent("click_cta_secondary", { section: "contato", cta_label: "contato_instagram" })}
-                className="card-base inline-flex items-center justify-center gap-2 p-3 text-sm font-semibold"
+                className="premium-panel inline-flex items-center justify-center gap-2 p-3 text-sm font-semibold"
                 aria-label="Visitar Instagram da Star Fire"
               >
                 <Instagram size={16} aria-hidden="true" />
@@ -213,7 +217,7 @@ const ContactSection = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackEvent("click_cta_secondary", { section: "contato", cta_label: "contato_linkedin" })}
-                className="card-base inline-flex items-center justify-center gap-2 p-3 text-sm font-semibold"
+                className="premium-panel inline-flex items-center justify-center gap-2 p-3 text-sm font-semibold"
                 aria-label="Visitar LinkedIn da Star Fire"
               >
                 <Linkedin size={16} aria-hidden="true" />
@@ -221,17 +225,21 @@ const ContactSection = () => {
               </a>
             </div>
 
-            <p className="pt-2 text-sm text-muted-foreground">
+            <p className="pt-1 text-sm text-muted-foreground" data-reveal="blur" data-reveal-order="5">
               <strong>Horário de atendimento:</strong> {COMPANY_HOURS}
             </p>
           </div>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="card-base order-1 space-y-4 p-4 sm:p-6 md:order-2" aria-label="Formulário de contato">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="premium-panel order-1 space-y-4 p-5 sm:p-6 md:order-2 lg:p-7"
+            aria-label="Formulário de contato"
+            data-reveal="slide-right"
+            data-reveal-order="1"
+          >
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.16em] text-primary">Briefing técnico</p>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Preencha os dados e retornamos com orientação inicial para o seu cenário.
-              </p>
+              <p className="text-[0.72rem] font-bold uppercase tracking-[0.16em] text-primary">Briefing técnico</p>
+              <p className="mt-1 text-sm leading-relaxed text-muted-foreground">Preencha os dados para receber o retorno inicial.</p>
             </div>
 
             <div>
@@ -293,11 +301,18 @@ const ContactSection = () => {
               <label htmlFor="contact-mensagem" className="sr-only">
                 Mensagem
               </label>
-              <textarea id="contact-mensagem" placeholder="Descreva rapidamente seu cenário" rows={4} className="input-field resize-none" {...register("mensagem")} onFocus={onFirstInteraction} />
+              <textarea
+                id="contact-mensagem"
+                placeholder="Descreva rapidamente seu cenário"
+                rows={4}
+                className="input-field resize-none"
+                {...register("mensagem")}
+                onFocus={onFirstInteraction}
+              />
               {errors.mensagem ? <p className="form-error">{errors.mensagem.message}</p> : null}
             </div>
 
-            <div className="rounded-lg border p-4">
+            <div className="rounded-[1.15rem] border border-[var(--line-soft)] bg-white/54 p-4">
               <input type="hidden" {...register("aceite_lgpd")} />
               <label className="flex cursor-pointer items-start gap-3">
                 <Checkbox
@@ -316,7 +331,7 @@ const ContactSection = () => {
               {errors.aceite_lgpd ? <p className="form-error">{errors.aceite_lgpd.message}</p> : null}
             </div>
 
-            <button type="submit" className="cta-whatsapp-lg w-full" disabled={isSubmitting}>
+            <button type="submit" className="cta-whatsapp-lg w-full justify-center" disabled={isSubmitting}>
               <MessageCircle size={18} aria-hidden="true" />
               {isSubmitting ? "Enviando..." : "Enviar solicitação"}
             </button>
